@@ -1,10 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block content %}
+<div class="row">
+    <div class="col-lg-10 mx-auto">
+        <div class="card shadow-sm message-card-shell">
+            <div class="card-header message-card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <h4 class="mb-0">
+                    Chat with {{ other_user.get_full_name|default:other_user.username }}
+                </h4>
+                <a href="{% url 'inbox' %}" class="btn btn-sm message-back-btn">Back to Messages</a>
+            </div>
+
+            <div class="card-body message-chat-area">
+                {% for msg in chat_messages %}
+                    {% if msg.sender == request.user %}
+                        <div class="d-flex justify-content-end mb-3">
+                            <div class="message-item message-item-sent">
+                                <div class="message-bubble message-bubble-sent">
+                                    <div class="message-text">{{ msg.body|linebreaksbr }}</div>
+                                    {% if msg.attachment %}
+                                        <div class="mt-2">
+                                            <a href="{{ msg.attachment.url }}" class="btn btn-sm message-attach-btn-light">Attachment</a>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="small mt-2 text-end message-time-sent-outside">{{ msg.created_at }}</div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="d-flex justify-content-start mb-3">
+                            <div class="message-item message-item-received">
+                                <div class="message-bubble message-bubble-received">
+                                    <div class="message-text">{{ msg.body|linebreaksbr }}</div>
+                                    {% if msg.attachment %}
+                                        <div class="mt-2">
+                                            <a href="{{ msg.attachment.url }}" class="btn btn-sm message-attach-btn-dark">Attachment</a>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="small mt-2 message-time-received-outside">{{ msg.created_at }}</div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% empty %}
+                    <p class="message-empty-text mb-0">No messages yet. Start the conversation below.</p>
+                {% endfor %}
+            </div>
+
+            <div class="card-footer message-card-footer">
+                <form method="post" enctype="multipart/form-data" class="message-form-shell">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        {{ form.body }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.attachment }}
+                    </div>
+                    <button class="btn btn-primary" type="submit">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
