@@ -1,0 +1,285 @@
+:root {
+    --bg-primary: #faf8f5;
+    --bg-secondary: #f3efe9;
+    --bg-elevated: #ede6db;
+    --bg-soft: #e5dfd4;
+    --border-color: #d9cfc2;
+
+    --text-primary: #2c2416;
+    --text-secondary: #5c5347;
+    --text-muted: #8c8172;
+
+    --accent-blue: #5f7ea8;
+    --accent-teal: #4a9c8c;
+    --accent-gold: #c49b4f;
+    --accent-highlight: #6a80c4;
+
+    /* Bright hover / active color for navbar buttons */
+    --nav-hover: #ff6b4a;   /* warm coral */
+
+    --success-dark: #d6f0e2;
+    --danger-dark: #fce4e8;
+    --warning-dark: #fef2d5;
+    --info-dark: #d7e8f7;
+
+    --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.07);
+    --shadow-card: 0 12px 35px rgba(0, 0, 0, 0.10);
+    --radius-lg: 18px;
+    --radius-md: 14px;
+    --radius-sm: 10px;
+    --transition: all 0.28s ease;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body.skillnest-body {
+    background:
+        radial-gradient(circle at top left, rgba(95, 126, 168, 0.07), transparent 24%),
+        radial-gradient(circle at top right, rgba(74, 156, 140, 0.05), transparent 20%),
+        linear-gradient(180deg, #faf8f4 0%, #f6f1e8 45%, #f3efe6 100%);
+    color: var(--text-primary);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+}
+
+/* Global */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+p, li, span, label, small {
+    color: var(--text-secondary);
+}
+
+a {
+    color: var(--accent-blue);
+    transition: var(--transition);
+}
+
+a:hover {
+    color: var(--accent-teal);
+}
+
+/* ───── Card (global + hover pop up effect) ───── */
+.section-card,
+.card {
+    background: linear-gradient(180deg, #ffffff 0%, #faf8f5 100%);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    color: var(--text-primary);
+    transition: var(--transition);               /* smooth animation */
+}
+
+/* Pop up effect on hover */
+.card:hover {
+    transform: translateY(-6px) scale(1.02);     /* lift & slightly enlarge */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.14);/* deeper shadow */
+    border-color: var(--accent-blue);            /* subtle border highlight */
+}
+
+/* Keep overflow hidden for images */
+.card {
+    overflow: hidden;
+}
+
+/* Tables */
+.table {
+    color: var(--text-primary);
+    --bs-table-bg: transparent;
+    --bs-table-color: var(--text-primary);
+    --bs-table-border-color: var(--border-color);
+    --bs-table-striped-bg: rgba(0, 0, 0, 0.015);
+    --bs-table-hover-bg: rgba(95, 126, 168, 0.06);
+}
+
+.table th,
+.table td {
+    vertical-align: middle;
+    border-color: var(--border-color);
+}
+
+.table thead th {
+    color: var(--text-primary);
+    font-weight: 600;
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* Form elements */
+.form-control,
+.form-select,
+textarea {
+    background-color: #ffffff;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    border-radius: 12px;
+    padding: 12px 14px;
+}
+
+.form-control:focus,
+.form-select:focus,
+textarea:focus {
+    background-color: #ffffff;
+    color: var(--text-primary);
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 0.2rem rgba(95, 126, 168, 0.18);
+}
+
+.form-control::placeholder,
+textarea::placeholder {
+    color: var(--text-muted);
+}
+
+/* Buttons */
+.btn {
+    border-radius: 12px;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--accent-blue), #4f6f9f);
+    border: none;
+    color: #ffffff;
+    box-shadow: 0 8px 18px rgba(95, 126, 168, 0.18);
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    background: linear-gradient(135deg, #6a80c4, #5a77b5);
+    color: #ffffff;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, var(--accent-teal), #3f8d7e);
+    border: none;
+    color: #ffffff;
+}
+
+.btn-success:hover {
+    transform: translateY(-1px);
+    color: #ffffff;
+    background: linear-gradient(135deg, #5aa89a, #489c8c);
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, var(--accent-gold), #b38a3d);
+    border: none;
+    color: #1b1c1f;
+}
+
+.btn-warning:hover {
+    color: #111;
+    transform: translateY(-1px);
+    background: linear-gradient(135deg, #d9b56d, #c39a4f);
+}
+
+.btn-outline-light {
+    border-color: var(--border-color);
+    color: var(--text-primary);
+    background: transparent;
+}
+
+.btn-outline-light:hover {
+    background-color: var(--bg-soft);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+/* Navbar */
+.skillnest-navbar {
+    background: rgba(250, 248, 245, 0.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    padding-top: 14px;
+    padding-bottom: 14px;
+}
+
+.skillnest-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    font-weight: 700;
+    color: var(--text-primary) !important;
+    letter-spacing: 0.3px;
+}
+
+.brand-mark {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-teal));
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 800;
+    box-shadow: 0 8px 20px rgba(95, 126, 168, 0.22);
+}
+
+.brand-text {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+}
+
+/* ─── Nav links ─── */
+.skillnest-nav-link {
+    color: var(--text-secondary) !important;
+    font-weight: 500;
+    position: relative;
+    padding: 10px 14px !important;
+    border-radius: 10px;
+    transition: var(--transition);
+}
+
+/* Bright coral on hover */
+.skillnest-nav-link:hover,
+.skillnest-nav-link:focus {
+    background-color: var(--nav-hover) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(255, 107, 74, 0.35);
+}
+
+/* Active page */
+.skillnest-nav-link.active,
+.skillnest-nav-link[aria-current="page"] {
+    background-color: var(--nav-hover) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(255, 107, 74, 0.35);
+    font-weight: 700;
+}
+
+/* Login button */
+.skillnest-login-btn {
+    background: linear-gradient(135deg, rgba(95, 126, 168, 0.10), rgba(74, 156, 140, 0.08));
+    border: 1px solid rgba(95, 126, 168, 0.22);
+    color: var(--text-primary);
+    transition: var(--transition);
+}
+.skillnest-login-btn:hover,
+.skillnest-login-btn:focus {
+    background: var(--nav-hover) !important;
+    color: #ffffff !important;
+    border-color: var(--nav-hover);
+    box-shadow: 0 4px 12px rgba(255, 107, 74, 0.35);
+}
+
+.nav-gap {
+    gap: 6px;
+}
+
+.skillnest-toggler {
+    border: 1px solid rgba(74, 156, 140, 0.35);
+    border-radius: 14px;
+    padding: 8px 10px;
+    background: linear-gradient(135deg, rgba(95, 126, 168, 0.08), rgba(74, 156, 140, 0.05));
+    box-shadow:
+        0 0 0 1px rgba(95, 126, 168, 0.10),
+        0 8px 22px rgba(0, 0, 0, 0.08);
+}
