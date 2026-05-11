@@ -1,10 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+<h2>Report Management</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Reporter</th>
+            <th>Reported User</th>
+            <th>Reason</th>
+            <th>Details</th>
+            <th>Resolved</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for report in reports %}
+        <tr>
+            <td>{{ report.reporter.email }}</td>
+            <td>{{ report.reported_user.email|default:'N/A' }}</td>
+            <td>{{ report.reason }}</td>
+            <td>{{ report.details|truncatewords:10 }}</td>
+            <td>{{ report.resolved }}</td>
+            <td>
+                {% if not report.resolved %}
+                    <a href="{% url 'resolve_report' report.id %}" class="btn btn-sm btn-success">Resolve</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

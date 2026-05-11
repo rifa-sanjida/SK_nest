@@ -1,10 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+<h2>User Management</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Verified</th>
+            <th>Suspended</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for u in users %}
+        <tr>
+            <td>{{ u.get_full_name|default:u.username }}</td>
+            <td>{{ u.email }}</td>
+            <td>{{ u.role }}</td>
+            <td>{{ u.is_provider_verified }}</td>
+            <td>{{ u.is_suspended }}</td>
+            <td>
+                <a href="{% url 'toggle_suspend_user' u.id %}" class="btn btn-sm btn-warning">Suspend/Unsuspend</a>
+                {% if u.role == 'provider' and not u.is_provider_verified %}
+                    <a href="{% url 'verify_provider' u.id %}" class="btn btn-sm btn-success">Verify</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,10 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-7">
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <h3>Review Completed Course</h3>
+            </div>
+            <div class="card-body">
+                <p><strong>Service:</strong> {{ service.title }}</p>
+                <p><strong>Provider:</strong> {{ booking.provider.get_full_name|default:booking.provider.username }}</p>
+                <p><strong>Completed Date:</strong> {{ booking.booking_date }}</p>
+
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label">Rating (1 to 5)</label>
+                        {{ form.rating }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Comment</label>
+                        {{ form.comment }}
+                    </div>
+                    <button class="btn btn-success" type="submit">Save Review</button>
+                    <a href="{% url 'learner_booking_list' %}" class="btn btn-secondary">Back</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

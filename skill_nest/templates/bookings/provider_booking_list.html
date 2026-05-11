@@ -1,10 +1,89 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block content %}
+<div class="content-shell">
+    <div class="mb-4">
+        <span class="soft-badge">Provider Panel</span>
+        <h2 class="section-title mt-3 mb-2">Booking Requests</h2>
+        <p class="section-subtitle">
+            Manage learner requests, update booking status, chat and submit reports when needed.
+        </p>
+    </div>
+
+    <div class="table-responsive booking-table-wrap">
+        <table class="table table-bordered table-striped booking-table align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>Learner</th>
+                    <th>Service</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                    <th>Chat / Report</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in bookings %}
+                <tr>
+                    <td>{{ booking.learner.get_full_name|default:booking.learner.username }}</td>
+                    <td>{{ booking.service.title }}</td>
+                    <td>{{ booking.booking_date }}</td>
+                    <td>{{ booking.booking_time }}</td>
+                    <td>
+                        {% if booking.status == 'pending' %}
+                            <span class="booking-status-badge status-pending">{{ booking.status }}</span>
+                        {% elif booking.status == 'confirmed' %}
+                            <span class="booking-status-badge status-confirmed">{{ booking.status }}</span>
+                        {% elif booking.status == 'completed' %}
+                            <span class="booking-status-badge status-completed">{{ booking.status }}</span>
+                        {% elif booking.status == 'rejected' %}
+                            <span class="booking-status-badge status-rejected">{{ booking.status }}</span>
+                        {% elif booking.status == 'cancelled' %}
+                            <span class="booking-status-badge status-cancelled">{{ booking.status }}</span>
+                        {% else %}
+                            <span class="booking-status-badge status-default">{{ booking.status }}</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="booking-action-group">
+                            <a href="{% url 'update_booking_status' booking.id 'confirmed' %}" class="btn booking-btn booking-btn-teal">
+                                Confirm
+                            </a>
+                            <a href="{% url 'update_booking_status' booking.id 'completed' %}" class="btn booking-btn booking-btn-primary">
+                                Complete
+                            </a>
+                            <a href="{% url 'update_booking_status' booking.id 'rejected' %}" class="btn booking-btn booking-btn-gold">
+                                Reject
+                            </a>
+                            <a href="{% url 'update_booking_status' booking.id 'cancelled' %}" class="btn booking-btn booking-btn-danger">
+                                Cancel
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="booking-action-group">
+                            {% if booking.status != 'cancelled' and booking.status != 'rejected' %}
+                                <a href="{% url 'conversation_detail' booking.learner.id %}" class="btn booking-btn booking-btn-dark">
+                                    Message Learner
+                                </a>
+                            {% endif %}
+
+                            {% if booking.status == 'completed' %}
+                                <a href="{% url 'submit_report' booking.id %}" class="btn booking-btn booking-btn-danger">
+                                    Report Learner
+                                </a>
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center empty-booking-text">No booking requests found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
