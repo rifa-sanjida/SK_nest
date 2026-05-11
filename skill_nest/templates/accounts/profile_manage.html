@@ -1,10 +1,129 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h3>Manage Profile</h3>
+    </div>
+    <div class="card-body">
+
+        <div class="text-center mb-4">
+            {% if request.user.profile_picture %}
+                <img src="{{ request.user.profile_picture.url }}"
+                     alt="Profile Picture"
+                     class="rounded-circle shadow-sm"
+                     style="width: 140px; height: 140px; object-fit: cover; border: 4px solid #dee2e6;">
+            {% else %}
+                <div class="rounded-circle d-inline-flex align-items-center justify-content-center bg-secondary text-white shadow-sm"
+                     style="width: 140px; height: 140px; font-size: 48px; border: 4px solid #dee2e6;">
+                    {{ request.user.username|first|upper }}
+                </div>
+            {% endif %}
+            <h5 class="mt-3 mb-0">{{ request.user.get_full_name|default:request.user.username }}</h5>
+            <p class="text-muted">{{ request.user.email }}</p>
+        </div>
+
+        <form method="post" enctype="multipart/form-data" id="profileForm">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="form-label">First Name</label>
+                {{ user_form.first_name }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Last Name</label>
+                {{ user_form.last_name }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                {{ user_form.email }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Phone</label>
+                {{ user_form.phone }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Division</label>
+                {{ user_form.division_obj }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">City</label>
+                {{ user_form.city_obj }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Area</label>
+                {{ user_form.area_obj }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Address</label>
+                {{ user_form.address }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Profile Picture</label>
+                {{ user_form.profile_picture }}
+            </div>
+
+            {% if profile_form %}
+                {{ profile_form.as_p }}
+            {% endif %}
+
+            <button class="btn btn-primary" type="submit">Save Changes</button>
+        </form>
+
+        <a href="{% url 'change_password' %}" class="btn btn-warning mt-3">Change Password</a>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const divisionSelect = document.getElementById('id_division_obj');
+    const citySelect = document.getElementById('id_city_obj');
+    const areaSelect = document.getElementById('id_area_obj');
+
+    function resetSelect(select, placeholder) {
+        select.innerHTML = `<option value="">${placeholder}</option>`;
+    }
+
+    if (divisionSelect && citySelect && areaSelect) {
+        divisionSelect.addEventListener('change', function () {
+            const divisionId = this.value;
+            resetSelect(citySelect, 'Select City');
+            resetSelect(areaSelect, 'Select Area');
+
+            if (divisionId) {
+                fetch(`/services/ajax/load-cities/?division_id=${divisionId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(item => {
+                            citySelect.innerHTML += `<option value="${item.id}">${item.name}</option>`;
+                        });
+                    });
+            }
+        });
+
+        citySelect.addEventListener('change', function () {
+            const cityId = this.value;
+            resetSelect(areaSelect, 'Select Area');
+
+            if (cityId) {
+                fetch(`/services/ajax/load-areas/?city_id=${cityId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(item => {
+                            areaSelect.innerHTML += `<option value="${item.id}">${item.name}</option>`;
+                        });
+                    });
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

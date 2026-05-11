@@ -1,10 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block content %}
+    <h2>Learner Dashboard</h2>
+
+    <div class="row g-3">
+        <div class="col-md-3">
+            <a class="btn btn-outline-primary w-100" href="{% url 'service_list' %}">
+                Find Services
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a class="btn btn-outline-success w-100" href="{% url 'learner_booking_list' %}">
+                My Bookings
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a class="btn btn-outline-warning w-100" href="{% url 'wishlist_list' %}">
+                My Wishlist
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a class="btn btn-outline-dark w-100" href="{% url 'inbox' %}">
+                Messages
+            </a>
+        </div>
+    </div>
+
+   <!-- <div class="card shadow-sm mt-4">
+        <div class="card-body">
+            <h5 class="card-title">Important Note</h5>
+            <p class="mb-0">
+                You can write a review, report a provider, and send messages from your completed or active booking records.
+            </p>
+        </div>
+    </div>-->
+{% endblock %}
+
