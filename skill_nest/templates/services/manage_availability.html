@@ -1,10 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block content %}
+<h2>Manage Availability</h2>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header">Add Weekly Availability</div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ availability_form.as_p }}
+                    <button name="save_availability" class="btn btn-primary">Add</button>
+                </form>
+            </div>
+        </div>
 
-</body>
-</html>
+        <ul class="list-group">
+            {% for item in availabilities %}
+                <li class="list-group-item">{{ item.day_of_week }}: {{ item.start_time }} - {{ item.end_time }}</li>
+            {% empty %}
+                <li class="list-group-item">No availability added yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header">Block Specific Date</div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ blocked_form.as_p }}
+                    <button name="save_blocked" class="btn btn-danger">Block Date</button>
+                </form>
+            </div>
+        </div>
+
+        <ul class="list-group">
+            {% for item in blocked_dates %}
+                <li class="list-group-item">{{ item.blocked_date }} - {{ item.reason }}</li>
+            {% empty %}
+                <li class="list-group-item">No blocked dates added yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

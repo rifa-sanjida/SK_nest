@@ -1,10 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block content %}
+<h2>Admin Dashboard</h2>
+<div class="row g-3">
+    <div class="col-md-4"><div class="card p-3 shadow-sm">Users: {{ users_count }}</div></div>
+    <div class="col-md-4"><div class="card p-3 shadow-sm">Providers: {{ providers_count }}</div></div>
+    <div class="col-md-4"><div class="card p-3 shadow-sm">Learners: {{ learners_count }}</div></div>
+    <div class="col-md-4"><div class="card p-3 shadow-sm">Services: {{ services_count }}</div></div>
+    <div class="col-md-4"><div class="card p-3 shadow-sm">Bookings: {{ bookings_count }}</div></div>
+    <div class="col-md-4"><div class="card p-3 shadow-sm">Reports: {{ reports_count }}</div></div>
+</div>
 
-</body>
-</html>
+<div class="mt-4 d-flex flex-wrap gap-2">
+    <a href="{% url 'user_management' %}" class="btn btn-primary">Manage Users</a>
+    <a href="{% url 'service_management' %}" class="btn btn-warning">Manage Services</a>
+    <a href="{% url 'booking_management' %}" class="btn btn-success">Manage Bookings</a>
+    <a href="{% url 'report_management' %}" class="btn btn-danger">Manage Reports</a>
+    <a href="{% url 'recovery_requests' %}" class="btn btn-dark">Password Recovery</a>
+</div>
+{% endblock %}

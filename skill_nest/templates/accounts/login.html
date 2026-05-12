@@ -1,10 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8">
+        <div class="content-shell auth-shell">
+            <div class="mb-4 text-center">
+                <span class="soft-badge">Welcome Back</span>
+                <h2 class="section-title mt-3 mb-2">Login</h2>
+                <p class="section-subtitle mx-auto">
+                    Sign in to access your dashboard, bookings, messages and learning progress.
+                </p>
+            </div>
+
+            <form method="post" class="theme-form">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <div class="d-grid mt-4">
+                    <button class="btn skill-btn skill-btn-primary" type="submit">Login</button>
+                </div>
+            </form>
+
+            <div class="text-center mt-4">
+                <a href="{% url 'request_password_recovery' %}" class="theme-inline-link">
+                    Forgot password?
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
