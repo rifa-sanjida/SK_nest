@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block content %}
+<h2>Provider Dashboard</h2>
+<div class="row g-3">
+    <div class="col-md-4">
+        <a class="btn btn-outline-primary w-100" href="{% url 'provider_service_list' %}">My Services</a>
+    </div>
+    <div class="col-md-4">
+        <a class="btn btn-outline-success w-100" href="{% url 'add_service' %}">Post New Service</a>
+    </div>
+    <div class="col-md-4">
+        <a class="btn btn-outline-dark w-100" href="{% url 'manage_availability' %}">Availability</a>
+    </div>
+    <div class="col-md-4">
+        <a class="btn btn-outline-warning w-100" href="{% url 'provider_booking_list' %}">Booking Requests</a>
+    </div>
+</div>
+{% endblock %}

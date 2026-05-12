@@ -1,10 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block content %}
+<div class="message-page-shell">
+    <div class="mb-4">
+        <h2 class="mb-2">Sent Messages</h2>
+        <p class="message-page-subtitle mb-0">
+            Review the messages you have already sent.
+        </p>
+    </div>
+
+    <div class="list-group message-list-group">
+        {% for msg in messages_list %}
+            <a href="{% url 'message_detail' msg.id %}" class="list-group-item list-group-item-action message-list-item">
+                <strong class="message-user-name">{{ msg.subject|default:'No Subject' }}</strong>
+                <div class="mt-1 message-last-text">To {{ msg.receiver.username }}</div>
+                <small class="message-time-stamp d-block mt-2">{{ msg.created_at }}</small>
+            </a>
+        {% empty %}
+            <div class="list-group-item message-list-item-empty">No sent messages.</div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

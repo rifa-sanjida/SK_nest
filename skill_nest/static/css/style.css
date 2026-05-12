@@ -561,3 +561,492 @@ textarea::placeholder {
     .content-shell {
         padding: 20px;
     }
+
+    .section-title {
+        font-size: 1.65rem;
+    }
+
+    .footer-links {
+        margin-top: 6px;
+    }
+}
+
+.skillnest-navbar.navbar-scrolled {
+    background: rgba(250, 248, 245, 0.96);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.10);
+}
+
+.skillnest-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    color: var(--text-primary) !important;
+}
+
+.skillnest-logo {
+    width: 58px;
+    height: 58px;
+    object-fit: contain;
+    border-radius: 14px;
+    padding: 4px;
+    background: rgba(0, 0, 0, 0.02);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+}
+
+.brand-text-wrap {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+}
+
+.brand-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: 0.4px;
+}
+
+.brand-subtitle {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    letter-spacing: 0.8px;
+    margin-top: 4px;
+}
+
+@media (max-width: 767.98px) {
+    .skillnest-logo {
+        width: 48px;
+        height: 48px;
+    }
+
+    .brand-title {
+        font-size: 1rem;
+    }
+
+    .brand-subtitle {
+        font-size: 0.72rem;
+    }
+}
+
+.home-hero-logo {
+    width: 180px;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.10));
+}
+
+@media (max-width: 767.98px) {
+    .home-hero-logo {
+        width: 130px;
+    }
+}
+
+/* Booking Tables */
+.booking-table-wrap {
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 18px;
+    overflow: hidden;
+    background: linear-gradient(180deg, #ffffff 0%, #faf8f5 100%);
+    box-shadow: var(--shadow-soft);
+}
+
+.booking-table {
+    margin-bottom: 0;
+    --bs-table-bg: transparent;
+    --bs-table-color: var(--text-primary);
+    --bs-table-striped-color: var(--text-primary);
+    --bs-table-striped-bg: rgba(0, 0, 0, 0.015);
+    --bs-table-hover-color: var(--text-primary);
+    --bs-table-hover-bg: rgba(95, 126, 168, 0.05);
+    --bs-table-border-color: var(--border-color);
+}
+
+.booking-table thead th {
+    color: var(--text-primary) !important;
+    background: rgba(0, 0, 0, 0.02);
+    font-weight: 700;
+    padding: 16px 14px;
+    border-color: var(--border-color);
+    white-space: nowrap;
+}
+
+.booking-table tbody td {
+    color: var(--text-primary) !important;
+    padding: 18px 14px;
+    border-color: var(--border-color);
+    background-color: transparent !important;
+}
+
+.booking-table tbody tr {
+    color: var(--text-primary) !important;
+}
+
+.booking-table tbody tr:nth-of-type(odd) > * {
+    color: var(--text-primary) !important;
+    background-color: rgba(0, 0, 0, 0.01) !important;
+}
+
+.booking-table tbody tr:nth-of-type(even) > * {
+    color: var(--text-primary) !important;
+    background-color: transparent !important;
+}
+
+.booking-table tbody tr:hover > * {
+    color: var(--text-primary) !important;
+    background-color: rgba(95, 126, 168, 0.04) !important;
+}
+
+.booking-table td,
+.booking-table th,
+.booking-table td a,
+.booking-table td div,
+.booking-table td span {
+    color: var(--text-primary);
+}
+
+.payment-status-text {
+    color: var(--text-primary);
+    font-weight: 500;
+    text-transform: lowercase;
+    word-break: break-word;
+}
+
+.empty-booking-text {
+    color: var(--text-secondary) !important;
+    padding: 22px !important;
+}
+
+/* Status Badges */
+.booking-status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 92px;
+    padding: 7px 12px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: lowercase;
+    letter-spacing: 0.2px;
+}
+
+.status-pending {
+    background: rgba(49, 195, 234, 0.18);
+    color: #1b6d7a !important;
+    border: 1px solid rgba(49, 195, 234, 0.35);
+}
+
+.status-confirmed {
+    background: rgba(74, 156, 140, 0.18);
+    color: #1e5c4f !important;
+    border: 1px solid rgba(74, 156, 140, 0.30);
+}
+
+.status-completed {
+    background: rgba(74, 156, 140, 0.25);
+    color: #1e5c4f !important;
+    border: 1px solid rgba(74, 156, 140, 0.35);
+}
+
+.status-rejected {
+    background: rgba(180, 70, 90, 0.14);
+    color: #7a3b44 !important;
+    border: 1px solid rgba(180, 70, 90, 0.25);
+}
+
+.status-cancelled {
+    background: rgba(190, 70, 70, 0.14);
+    color: #8a4040 !important;
+    border: 1px solid rgba(190, 70, 70, 0.25);
+}
+
+.status-default {
+    background: rgba(95, 126, 168, 0.14);
+    color: #2e3b4e !important;
+    border: 1px solid rgba(95, 126, 168, 0.25);
+}
+
+/* Booking Buttons */
+.booking-action-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.booking-btn {
+    border-radius: 14px;
+    padding: 9px 14px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-decoration: none;
+    border: none;
+    box-shadow: none;
+    transition: var(--transition);
+}
+
+.booking-btn:hover {
+    transform: translateY(-1px);
+}
+
+.booking-btn-primary {
+    background: linear-gradient(135deg, var(--accent-blue), #4f6f9f);
+    color: #ffffff !important;
+}
+
+.booking-btn-primary:hover {
+    color: #ffffff !important;
+    background: linear-gradient(135deg, #6a80c4, #5a77b5);
+}
+
+.booking-btn-teal {
+    background: linear-gradient(135deg, var(--accent-teal), #3f8d7e);
+    color: #ffffff !important;
+}
+
+.booking-btn-teal:hover {
+    color: #ffffff !important;
+    background: linear-gradient(135deg, #5aa89a, #489c8c);
+}
+
+.booking-btn-gold {
+    background: linear-gradient(135deg, var(--accent-gold), #b38a3d);
+    color: #1b1c1f !important;
+}
+
+.booking-btn-gold:hover {
+    color: #111111 !important;
+    background: linear-gradient(135deg, #d9b56d, #c39a4f);
+}
+
+.booking-btn-danger {
+    background: linear-gradient(135deg, #c1465b, #b03a4e);
+    color: #ffffff !important;
+}
+
+.booking-btn-danger:hover {
+    color: #ffffff !important;
+    background: linear-gradient(135deg, #d15a6e, #c14a5e);
+}
+
+.booking-btn-dark {
+    background: linear-gradient(135deg, #6c757d, #5a636a);
+    color: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.booking-btn-dark:hover {
+    color: #ffffff !important;
+    border-color: rgba(95, 126, 168, 0.30);
+    background: linear-gradient(135deg, #7b8389, #69727a);
+}
+
+.booking-btn-outline {
+    background: transparent;
+    color: var(--accent-blue) !important;
+    border: 1px solid var(--accent-blue);
+}
+
+.booking-btn-outline:hover {
+    color: #ffffff !important;
+    background: var(--accent-blue);
+}
+
+/* Mobile */
+@media (max-width: 991.98px) {
+    .booking-table thead th,
+    .booking-table tbody td {
+        white-space: nowrap;
+    }
+
+    .booking-btn {
+        font-size: 0.88rem;
+        padding: 8px 12px;
+    }
+
+    .booking-status-badge {
+        min-width: 82px;
+        font-size: 0.8rem;
+    }
+}
+
+.table tbody tr td {
+    color: var(--text-primary) !important;
+}
+
+.table tbody tr td a {
+    color: inherit;
+}
+
+.table.table-striped > tbody > tr:nth-of-type(odd) > *,
+.table.table-striped > tbody > tr:nth-of-type(even) > * {
+    color: var(--text-primary) !important;
+}
+
+.table.table-striped > tbody > tr:nth-of-type(odd) > td,
+.table.table-striped > tbody > tr:nth-of-type(even) > td {
+    color: var(--text-primary) !important;
+}
+
+/* Messaging Pages */
+.message-page-shell {
+    background: linear-gradient(180deg, #ffffff 0%, #faf8f5 100%);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: var(--shadow-soft);
+}
+
+.message-page-subtitle {
+    color: var(--text-secondary);
+}
+
+.message-list-group {
+    background: transparent;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.message-list-item,
+.message-list-item-empty {
+    background: linear-gradient(180deg, #ffffff 0%, #faf8f5 100%) !important;
+    color: var(--text-primary) !important;
+    border: none !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+    padding: 18px 20px;
+    transition: var(--transition);
+}
+
+.message-list-item:hover,
+.message-list-item:focus {
+    background: linear-gradient(180deg, #f7f5f2 0%, #f0ede6 100%) !important;
+    color: var(--text-primary) !important;
+}
+
+.message-user-name {
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+.message-user-email {
+    color: var(--text-muted) !important;
+}
+
+.message-last-text {
+    color: var(--text-secondary) !important;
+}
+
+.message-empty-line {
+    color: var(--text-muted) !important;
+}
+
+.message-time-stamp {
+    color: var(--text-muted) !important;
+}
+
+.message-unread-badge {
+    background: linear-gradient(135deg, #c1465b, #b03a4e);
+    color: #ffffff;
+    font-weight: 700;
+    border-radius: 999px;
+    padding: 6px 10px;
+}
+
+/* Conversation */
+.message-card-shell {
+    background: linear-gradient(180deg, #ffffff 0%, #faf8f5 100%);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+}
+
+.message-card-header {
+    background: linear-gradient(180deg, #f2efe8 0%, #eae4d9 100%);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    color: var(--text-primary);
+    padding: 18px 22px;
+}
+
+.message-card-header h4,
+.message-card-header h3 {
+    color: var(--text-primary);
+}
+
+.message-back-btn {
+    background: rgba(0, 0, 0, 0.04);
+    color: var(--text-primary);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    padding: 8px 12px;
+}
+
+.message-back-btn:hover {
+    background: rgba(95, 126, 168, 0.10);
+    color: var(--text-primary);
+    border-color: rgba(95, 126, 168, 0.22);
+}
+
+.message-chat-area {
+    height: 450px;
+    overflow-y: auto;
+    background: linear-gradient(180deg, #faf8f4 0%, #f5f1ea 100%);
+    padding: 22px;
+}
+
+.message-empty-text {
+    color: var(--text-muted);
+}
+
+.message-bubble {
+    max-width: 70%;
+    padding: 14px 16px;
+    border-radius: 16px;
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.05);
+}
+
+.message-bubble-sent {
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-teal));
+    color: #ffffff;
+    border-bottom-right-radius: 6px;
+}
+
+.message-bubble-received {
+    background: linear-gradient(180deg, #ffffff 0%, #f5f2ed 100%);
+    color: var(--text-primary);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-bottom-left-radius: 6px;
+}
+
+.message-text {
+    color: inherit;
+    word-break: break-word;
+}
+
+.message-time-sent {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.message-time-received {
+    color: var(--text-muted);
+}
+
+.message-card-footer {
+    background: #f7f5f2;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    padding: 18px 22px;
+}
+
+.message-form-shell p {
+    margin-bottom: 16px;
+}
+
+.message-form-shell label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+

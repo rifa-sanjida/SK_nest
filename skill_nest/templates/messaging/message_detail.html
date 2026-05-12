@@ -1,10 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow-sm message-card-shell">
+            <div class="card-body">
+                <h3 class="mb-3">{{ message_obj.subject|default:'No Subject' }}</h3>
+
+                <div class="message-meta-line mb-2">
+                    <strong>From:</strong> {{ message_obj.sender.username }}
+                </div>
+
+                <div class="message-meta-line mb-3">
+                    <strong>To:</strong> {{ message_obj.receiver.username }}
+                </div>
+
+                <div class="message-detail-body mb-3">
+                    {{ message_obj.body }}
+                </div>
+
+                {% if message_obj.attachment %}
+                    <a href="{{ message_obj.attachment.url }}" class="btn message-attach-btn-dark">
+                        Download Attachment
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
