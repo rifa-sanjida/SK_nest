@@ -1,10 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+<h2>Password Recovery Requests</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>User</th>
+            <th>Requested At</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in requests_list %}
+        <tr>
+            <td>{{ item.user.email }}</td>
+            <td>{{ item.requested_at }}</td>
+            <td><a href="{% url 'send_temporary_password' item.id %}" class="btn btn-sm btn-dark">Generate Temp Password</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

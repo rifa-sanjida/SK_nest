@@ -1050,3 +1050,189 @@ textarea::placeholder {
     font-weight: 600;
 }
 
+.message-form-shell input,
+.message-form-shell textarea,
+.message-form-shell select {
+    width: 100%;
+    background-color: #ffffff;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    border-radius: 12px;
+    padding: 12px 14px;
+}
+
+.message-form-shell input:focus,
+.message-form-shell textarea:focus,
+.message-form-shell select:focus {
+    background-color: #ffffff;
+    color: var(--text-primary);
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 0.2rem rgba(95, 126, 168, 0.18);
+    outline: none;
+}
+
+.message-form-shell textarea::placeholder,
+.message-form-shell input::placeholder {
+    color: var(--text-muted);
+}
+
+.message-form-shell .helptext,
+.message-form-shell small,
+.message-form-shell ul {
+    color: var(--text-muted);
+}
+
+.message-attach-btn-light {
+    background: rgba(0, 0, 0, 0.08);
+    color: var(--text-primary);
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 10px;
+}
+
+.message-attach-btn-light:hover {
+    background: rgba(0, 0, 0, 0.12);
+}
+
+.message-attach-btn-dark {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid rgba(0, 0, 0, 0.14);
+    border-radius: 10px;
+}
+
+.message-attach-btn-dark:hover {
+    background: rgba(95, 126, 168, 0.08);
+    color: var(--text-primary);
+    border-color: rgba(95, 126, 168, 0.24);
+}
+
+.message-meta-line {
+    color: var(--text-secondary);
+}
+
+.message-meta-line strong {
+    color: var(--text-primary);
+}
+
+.message-detail-body {
+    color: var(--text-primary);
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 14px;
+    padding: 16px;
+    white-space: pre-wrap;
+}
+
+@media (max-width: 767.98px) {
+    .message-page-shell {
+        padding: 18px;
+    }
+
+    .message-chat-area {
+        height: 380px;
+        padding: 16px;
+    }
+
+    .message-bubble {
+        max-width: 88%;
+        padding: 12px 14px;
+    }
+
+    .message-card-header,
+    .message-card-footer {
+        padding: 16px;
+    }
+}
+
+.message-item {
+    max-width: 70%;
+}
+
+.message-item-sent {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.message-item-received {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.message-time-sent-outside {
+    color: var(--text-muted);
+    padding-right: 6px;
+}
+
+.message-time-received-outside {
+    color: var(--text-muted);
+    padding-left: 6px;
+}
+
+
+
+
+
+
+
+
+
+
+/* ── Custom skill-btn base ── */
+.skill-btn {
+    position: relative;
+    overflow: hidden;          /* contain the wave */
+    border-radius: 12px;
+    font-weight: 600;
+    transition: var(--transition);
+    display: inline-block;
+    text-align: center;
+    padding: 12px 14px;
+    border: none;
+    cursor: pointer;
+    z-index: 1;
+}
+
+/* Wave ripple pseudo-element */
+.skill-btn::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease, opacity 0.6s ease;
+    z-index: 0;
+    opacity: 0;
+}
+
+/* Expand the wave on hover */
+.skill-btn:hover::before {
+    width: 400px;
+    height: 400px;
+    opacity: 1;
+}
+
+/* Keep text above the wave */
+.skill-btn > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* ── Primary variant ── */
+.skill-btn-primary {
+    background: linear-gradient(135deg, var(--accent-blue), #4f6f9f);
+    color: #ffffff;
+    box-shadow: 0 8px 18px rgba(95, 126, 168, 0.18);
+}
+
+.skill-btn-primary:hover {
+    background: var(--nav-hover);          /* coral */
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(255, 107, 74, 0.35);
+}
