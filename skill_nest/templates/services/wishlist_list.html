@@ -1,10 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>My Wishlist</h2>
+    <a href="{% url 'service_list' %}" class="btn btn-outline-primary">Browse Services</a>
+</div>
+
+<div class="row">
+    {% for item in wishlist_items %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                {% if item.service.image %}
+                    <img src="{{ item.service.image.url }}" class="card-img-top" alt="{{ item.service.title }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.service.title }}</h5>
+                    <p class="card-text">{{ item.service.description|truncatewords:20 }}</p>
+                    <p><strong>Category:</strong> {{ item.service.category }}</p>
+                    <p><strong>Price:</strong> ৳{{ item.service.price }}</p>
+                    <p><strong>Provider:</strong> {{ item.service.provider.get_full_name|default:item.service.provider.username }}</p>
+                    <p><strong>Location:</strong> {{ item.service.division }}, {{ item.service.city }}, {{ item.service.area }}</p>
+
+                    <a href="{% url 'service_detail' item.service.id %}" class="btn btn-outline-primary btn-sm">View Details</a>
+
+                    <form method="post" action="{% url 'toggle_wishlist' item.service.id %}" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-danger btn-sm">Remove</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info">Your wishlist is empty.</div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

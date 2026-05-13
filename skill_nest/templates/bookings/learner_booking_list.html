@@ -1,10 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block content %}
+<h2>My Bookings</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Service</th>
+            <th>Provider</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>
+            <th>Payment</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for booking in bookings %}
+        <tr>
+            <td>{{ booking.service.title }}</td>
+            <td>{{ booking.provider.get_full_name|default:booking.provider.username }}</td>
+            <td>{{ booking.booking_date }}</td>
+            <td>{{ booking.booking_time }}</td>
+            <td>
+                <span class="badge bg-info text-dark">{{ booking.status }}</span>
+            </td>
+            <td>
+                {{ booking.payment.status }}
+                <br>
+                <a href="{% url 'payment_update' booking.id %}" class="btn btn-sm btn-outline-primary mt-2">
+                    Update Payment
+                </a>
+            </td>
+            <td>
+                {% if booking.status != 'cancelled' and booking.status != 'rejected' %}
+                    <a href="{% url 'conversation_detail' booking.provider.id %}" class="btn btn-sm btn-dark mb-1">
+                        Message Provider
+                    </a>
+                {% endif %}
+
+                {% if booking.status == 'completed' %}
+                    <a href="{% url 'add_review' booking.id %}" class="btn btn-sm btn-success mb-1">
+                        Write / Edit Review
+                    </a>
+                    <a href="{% url 'submit_report' booking.id %}" class="btn btn-sm btn-danger mb-1">
+                        Report Provider
+                    </a>
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="7" class="text-center">No bookings found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

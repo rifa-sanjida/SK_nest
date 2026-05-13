@@ -1,10 +1,114 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h3>{{ title }}</h3>
+    </div>
+    <div class="card-body">
+        <form method="post" enctype="multipart/form-data" id="serviceForm">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="form-label">Category</label>
+                {{ form.category }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Title</label>
+                {{ form.title }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Description</label>
+                {{ form.description }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Price</label>
+                {{ form.price }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Duration (minutes)</label>
+                {{ form.duration_minutes }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Division</label>
+                {{ form.division_obj }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">City</label>
+                {{ form.city_obj }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Area</label>
+                {{ form.area_obj }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Detailed Address</label>
+                {{ form.address }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Image</label>
+                {{ form.image }}
+            </div>
+
+            <div class="mb-3 form-check">
+                {{ form.is_active }}
+                <label class="form-check-label">Active</label>
+            </div>
+
+            <button class="btn btn-success" type="submit">Save Service</button>
+        </form>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const divisionSelect = document.getElementById('id_division_obj');
+    const citySelect = document.getElementById('id_city_obj');
+    const areaSelect = document.getElementById('id_area_obj');
+
+    function resetSelect(select, placeholder) {
+        select.innerHTML = `<option value="">${placeholder}</option>`;
+    }
+
+    divisionSelect.addEventListener('change', function () {
+        const divisionId = this.value;
+        resetSelect(citySelect, 'Select City');
+        resetSelect(areaSelect, 'Select Area');
+
+        if (divisionId) {
+            fetch(`/services/ajax/load-cities/?division_id=${divisionId}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(item => {
+                        citySelect.innerHTML += `<option value="${item.id}">${item.name}</option>`;
+                    });
+                });
+        }
+    });
+
+    citySelect.addEventListener('change', function () {
+        const cityId = this.value;
+        resetSelect(areaSelect, 'Select Area');
+
+        if (cityId) {
+            fetch(`/services/ajax/load-areas/?city_id=${cityId}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(item => {
+                        areaSelect.innerHTML += `<option value="${item.id}">${item.name}</option>`;
+                    });
+                });
+        }
+    });
+});
+</script>
+{% endblock %}
