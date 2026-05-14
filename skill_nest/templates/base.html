@@ -29,15 +29,18 @@
             {% if user.is_authenticated %}
                 <ul class="navbar-nav ms-auto align-items-lg-center nav-gap">
                     <li class="nav-item">
-                        <a class="nav-link skillnest-nav-link" href="{% url 'service_list' %}">Services</a>
+                        <a class="nav-link skillnest-nav-link {% if request.resolver_match.url_name == 'service_list' %}active{% endif %}"
+                           href="{% url 'service_list' %}">Services</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link skillnest-nav-link" href="{% url 'dashboard_redirect' %}">Dashboard</a>
+                        <a class="nav-link skillnest-nav-link {% if request.resolver_match.url_name == 'dashboard_redirect' %}active{% endif %}"
+                           href="{% url 'dashboard_redirect' %}">Dashboard</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link skillnest-nav-link" href="{% url 'inbox' %}">Messages</a>
+                        <a class="nav-link skillnest-nav-link {% if request.resolver_match.url_name == 'inbox' %}active{% endif %}"
+                           href="{% url 'inbox' %}">Messages</a>
                     </li>
 
                     <li class="nav-item">
@@ -66,13 +69,16 @@
             {% else %}
                 <ul class="navbar-nav ms-auto align-items-lg-center nav-gap">
                     <li class="nav-item">
-                        <a class="nav-link skillnest-nav-link" href="{% url 'service_list' %}">Services</a>
+                        <a class="nav-link skillnest-nav-link {% if request.resolver_match.url_name == 'service_list' %}active{% endif %}"
+                           href="{% url 'service_list' %}">Services</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link skillnest-nav-link" href="{% url 'register' %}">Register</a>
+                        <a class="nav-link skillnest-nav-link {% if request.resolver_match.url_name == 'register' %}active{% endif %}"
+                           href="{% url 'register' %}">Register</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link skillnest-nav-link skillnest-login-btn" href="{% url 'login' %}">Login</a>
+                        <a class="nav-link skillnest-nav-link skillnest-login-btn {% if request.resolver_match.url_name == 'login' %}active{% endif %}"
+                           href="{% url 'login' %}">Login</a>
                     </li>
                 </ul>
             {% endif %}
@@ -99,9 +105,7 @@
                 <div class="col-lg-6">
                     <div class="footer-brand-wrap">
                         <h5 class="footer-brand mb-2"></h5>
-                        <p class="footer-text mb-0">
-
-                        </p>
+                        <p class="footer-text mb-0"></p>
                     </div>
                 </div>
 
@@ -118,39 +122,6 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    // ─── Automatic Active Nav Link ──────────────────
-    (function() {
-        const currentPath = window.location.pathname;
-        const navLinks = document.querySelectorAll('.skillnest-nav-link');
-
-        navLinks.forEach(link => {
-            // Remove any existing active class (optional)
-            link.classList.remove('active');
-
-            const href = link.getAttribute('href');
-            if (!href) return;
-
-            // Exact match (e.g. /services/ or /messages/)
-            if (currentPath === href) {
-                link.classList.add('active');
-                return;
-            }
-
-            // Dashboard special handling: highlight if path starts with /dashboard/
-            if (href.includes('/dashboard') && currentPath.startsWith('/dashboard')) {
-                link.classList.add('active');
-                return;
-            }
-
-            // Also handle login/register if needed (exact matches already covered)
-        });
-    })();
-</script>
+<script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>
-
-
-
-
-
