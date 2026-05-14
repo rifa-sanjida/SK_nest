@@ -1,65 +1,184 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-<div class="content-shell">
-    <h2 class="section-title mb-4">{{ service.title }}</h2>
-
-    <div class="card mb-4">
-        <div class="card-body">
-            <p class="text-secondary">{{ service.description }}</p>
-            <div class="row">
-                <div class="col-md-6">
-                    <p><strong>Provider:</strong> {{ service.provider.get_full_name|default:service.provider.username }}</p>
-                    <p><strong>Category:</strong> {{ service.category }}</p>
-                    <p><strong>Price:</strong> ৳{{ service.price }}</p>
-                </div>
-                <div class="col-md-6">
-                    <p><strong>Duration:</strong> {{ service.duration_minutes }} minutes</p>
-                    <p><strong>Location:</strong> {{ service.division }}, {{ service.city }}, {{ service.area }} - {{ service.address }}</p>
-                </div>
-            </div>
-
-            {% if user.is_authenticated and user.role == 'learner' %}
-                <div class="mt-3">
-                    <a href="{% url 'create_booking' service.id %}" class="btn btn-success me-2">Book Now</a>
-
-                    <form method="post" action="{% url 'toggle_wishlist' service.id %}" class="d-inline">
-                        {% csrf_token %}
-                        {% if is_wishlisted %}
-                            <button type="submit" class="btn btn-outline-danger">Remove from Wishlist</button>
-                        {% else %}
-                            <button type="submit" class="btn btn-outline-primary">Add to Wishlist</button>
-                        {% endif %}
-                    </form>
+<div class="row">
+    <!-- MAIN SERVICE DETAILS -->
+    <div class="col-lg-8">
+        <div class="service-detail-card mb-4">
+            <!-- Image -->
+            {% if service.image %}
+                <div class="service-detail-img-wrap">
+                    <img src="{{ service.image.url }}" class="service-detail-img" alt="{{ service.title }}">
                 </div>
             {% endif %}
+
+            <!-- Content -->
+            <div class="service-detail-body">
+                <!-- Category badge + title -->
+                <span class="service-category-badge mb-3">{{ service.category.name|default:"Service" }}</span>
+                <h1 class="service-detail-title">{{ service.title }}</h1>
+
+                <!-- Quick meta row -->
+                <div class="service-quick-meta">
+                    <div class="quick-meta-item">
+                        <span class="quick-meta-icon"></span>
+                        <span class="quick-meta-text"><strong>৳{{ service.price }}</strong></span>
+                    </div>
+                    <div class="quick-meta-item">
+                        <span class="quick-meta-icon"></span>
+                        <span class="quick-meta-text">{{ service.duration_minutes }} min</span>
+                    </div>
+                    <div class="quick-meta-item">
+                        <span class="quick-meta-icon"></span>
+                        <span class="quick-meta-text">{{ service.area }}, {{ service.city }}</span>
+                    </div>
+                    {% if service.avg_rating %}
+                    <div class="quick-meta-item">
+                        <span class="quick-meta-icon">⭐</span>
+                        <span class="quick-meta-text">{{ service.avg_rating|floatformat:1 }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Description -->
+                <div class="service-description-section">
+                    <h4 class="section-label">About This Service</h4>
+                    <p class="service-full-desc">{{ service.description }}</p>
+                </div>
+
+                <!-- Location details -->
+                <div class="service-location-section">
+                    <h4 class="section-label">Location</h4>
+                    <p class="mb-0">{{ service.address }}</p>
+                    <p class="text-muted small">{{ service.area }}, {{ service.city }}, {{ service.division }}</p>
+                </div>
+
+                <!-- Provider info -->
+                <div class="provider-info-box">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="provider-avatar">
+                            {% if service.provider.profile_picture %}
+                                <img src="{{ service.provider.profile_picture.url }}" alt="{{ service.provider.get_full_name }}">
+                            {% else %}
+                                <span>{{ service.provider.get_full_name|default:service.provider.username|first|upper }}</span>
+                            {% endif %}
+                        </div>
+                        <div>
+                            <h5 class="mb-1">{{ service.provider.get_full_name|default:service.provider.username }}</h5>
+                            <p class="text-muted small mb-0">Service Provider</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- REVIEWS SECTION -->
+        <div class="service-detail-card">
+            <div class="service-detail-body">
+                <h4 class="section-label mb-4">
+                    Reviews
+                    <span class="text-muted">({{ service.reviews.count }})</span>
+                </h4>
+
+                {% for review in service.reviews.all %}
+                    <div class="review-item">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="review-avatar">
+                                    {% if review.learner.profile_picture %}
+                                        <img src="{{ review.learner.profile_picture.url }}" alt="{{ review.learner.username }}">
+                                    {% else %}
+                                        <span>{{ review.learner.username|first|upper }}</span>
+                                    {% endif %}
+                                </div>
+                                <strong>{{ review.learner.username }}</strong>
+                            </div>
+                            <span class="review-stars">
+                                {% for i in "12345" %}
+                                    {% if forloop.counter <= review.rating %}
+                                        ★
+                                    {% else %}
+                                        ☆
+                                    {% endif %}
+                                {% endfor %}
+                            </span>
+                        </div>
+                        <p class="review-comment mb-0">{{ review.comment }}</p>
+                    </div>
+                {% empty %}
+                    <div class="text-center py-4">
+                        <div class="mb-3" style="font-size:2rem;"></div>
+                        <p class="text-muted mb-0">No reviews yet. Be the first to review!</p>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 
-    <h4 class="mb-3">Reviews</h4>
-    {% for review in service.reviews.all %}
-        <div class="card mb-3">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <strong class="text-primary">{{ review.learner.username }}</strong>
-                    <span class="soft-badge">{{ review.rating }}/5</span>
+    <!-- SIDEBAR – Booking actions -->
+    <div class="col-lg-4">
+        <div class="service-sidebar-card">
+            <div class="service-detail-body">
+                <div class="text-center mb-4">
+                    <span class="service-price-large">৳{{ service.price }}</span>
+                    <p class="text-muted small mb-0">per session · {{ service.duration_minutes }} min</p>
                 </div>
-                <p class="mb-0 text-secondary">{{ review.comment }}</p>
+
+                {% if user.is_authenticated and user.role == 'learner' %}
+                    <!-- Book Now Button -->
+                    <a href="{% url 'create_booking' service.id %}" class="btn btn-success btn-lg w-100 mb-3">
+                         Book Now
+                    </a>
+
+                    <!-- Message Provider Button -->
+                    <a href="{% url 'conversation_detail' service.provider.id %}" class="btn btn-outline-primary w-100 mb-3">
+                         Message Provider
+                    </a>
+
+                    <!-- Wishlist Toggle -->
+                    <form method="post" action="{% url 'toggle_wishlist' service.id %}">
+                        {% csrf_token %}
+                        {% if is_wishlisted %}
+                            <button type="submit" class="btn btn-outline-danger w-100 mb-3">
+                                ♥ Remove from Wishlist
+                            </button>
+                        {% else %}
+                            <button type="submit" class="btn btn-outline-primary w-100 mb-3">
+                                ♡ Add to Wishlist
+                            </button>
+                        {% endif %}
+                    </form>
+
+                    <div class="alert alert-info small mb-0">
+                        <small> After the booking is completed, you can review and report the provider from your booking history.</small>
+                    </div>
+
+                {% elif user.is_authenticated and user.role == 'provider' %}
+                    <!-- If the logged-in user is the provider themselves -->
+                    {% if user == service.provider %}
+                        <div class="alert alert-light border text-center mb-3">
+                            <small class="text-muted">This is your own service listing.</small>
+                        </div>
+                        <a href="{% url 'service_list' %}" class="btn btn-outline-primary w-100 mb-3">
+                            ← Back to Services
+                        </a>
+                    {% else %}
+                        <!-- Another provider viewing – can still message -->
+                        <a href="{% url 'conversation_detail' service.provider.id %}" class="btn btn-outline-primary btn-lg w-100 mb-3">
+                             Message Provider
+                        </a>
+                        <p class="text-muted small text-center mb-0">You can message this provider for collaboration.</p>
+                    {% endif %}
+
+                {% elif not user.is_authenticated %}
+                    <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-primary btn-lg w-100 mb-3">
+                        Login to Book
+                    </a>
+                    <p class="text-muted small text-center mb-0">You must be logged in as a learner to book or message this provider.</p>
+                {% endif %}
             </div>
         </div>
-    {% empty %}
-        <div class="card">
-            <div class="card-body text-center text-muted">
-                <p class="mb-0">No reviews yet.</p>
-            </div>
-        </div>
-    {% endfor %}
+    </div>
 </div>
 {% endblock %}
-
-
-
-
-
-
-
